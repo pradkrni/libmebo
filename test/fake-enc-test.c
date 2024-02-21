@@ -682,7 +682,7 @@ get_codec_and_algo_id (CodecID id, int *codec_id, int *algo_id)
       *algo_id = LIBMEBO_BRC_ALGORITHM_DERIVED_LIBVPX_VP9;
       break;
     case AV1_ID:
-      *codec_id = LIBMEBO_CODEC_VP8;
+      *codec_id = LIBMEBO_CODEC_AV1;
       *algo_id = LIBMEBO_BRC_ALGORITHM_DERIVED_AOM_AV1;
       break;
     default:
