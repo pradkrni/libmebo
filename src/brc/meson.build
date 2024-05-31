@@ -51,7 +51,7 @@ endif
 ldflags = ['-lm']
 add_global_link_arguments(ldflags, language : 'c')
 
-libbrc  = static_library('libbrc',
+libbrc  = shared_library('libbrc',
   libbrc_sources  + libbrc_headers,
   c_args : libmebo_args,
   include_directories: [configinc, libbrcinc],
