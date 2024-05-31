@@ -22,16 +22,22 @@ cpp_compiler = meson.get_compiler('cpp')
 dl_dep_c = c_compiler.find_library('dl', required:true)
 dl_dep_cpp = cpp_compiler.find_library('dl', required:true)
 
-libbrc_controller  = static_library('libbrc_controller',
+libbrc_find = c_compiler.find_library('libbrc', required:true)
+
+libbrc_controller  = shared_library('libbrc_controller',
   libbrc_controller_sources  + libbrc_controller_headers,  
   c_args : libmebo_args,
   include_directories: [configinc, libbrcinc],
+  link_args: '-ldl',
+  link_with: libbrc,
+  dependencies: [dl_dep_c, dl_dep_cpp],
+  install:true,
   #include_directories: [configinc, libbrcinc, aom_av1_include_dir, aom_av1_include_build_dir],
 )
 
  libbrc_controller_dep = declare_dependency (link_with: libbrc_controller,
    include_directories: [configinc, libbrcinc],
    #include_directories: [configinc, libbrcinc, aom_av1_include_dir , aom_av1_include_build_dir],
-   dependencies: [dl_dep_c, dl_dep_cpp]
+   dependencies: [dl_dep_c, dl_dep_cpp, libbrc_find]
  )
   

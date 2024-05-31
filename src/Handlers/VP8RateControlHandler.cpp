@@ -1,8 +1,10 @@
 #include <iostream>
 #include "VP8RateControlHandler.hpp"
+extern "C"
+{
 #include "../brc/vp8/libvpx_derived/libvpx_vp8_rtc.h"
 
-
+ 
 Libmebo_brc_VP8::Libmebo_brc_VP8(LibMeboBrcAlgorithmID algo_id) : Libmebo_brc(LIBMEBO_CODEC_VP8,  algo_id)
 {
 	std::cout<<"try-vp8 constructor\n\n";
@@ -104,3 +106,4 @@ LibMeboStatus Libmebo_brc_VP8::get_loop_filter_level(LibMeboRateController* rc, 
 
   return status;
 }
+}// extern "C"

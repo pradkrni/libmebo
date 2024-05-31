@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <iostream>
 #include "../src/Handlers/AV1RateControlHandler.hpp"
 #include "../src/Handlers/LibMeboControlHandler.hpp"
 #include "../src/Handlers/VP8RateControlHandler.hpp"
@@ -14,7 +15,7 @@ class Libmebo_brc_factory
          switch(static_cast<LibMeboCodecType>(id))
          {
            case LIBMEBO_CODEC_VP8:
-               codecType = LIBMEBO_CODEC_VP8;
+               codecType = LIBMEBO_CODEC_VP8;   
                break;
            case LIBMEBO_CODEC_VP9:
                codecType = LIBMEBO_CODEC_VP9;

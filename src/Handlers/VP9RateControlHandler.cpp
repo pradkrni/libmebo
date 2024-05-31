@@ -1,5 +1,7 @@
 #include <iostream>
 #include "VP9RateControlHandler.hpp"
+extern "C"
+{
 #include "../brc/vp9/libvpx_derived/libvpx_vp9_rtc.h"
 
 
@@ -111,3 +113,4 @@ LibMeboStatus Libmebo_brc_VP9::get_loop_filter_level(LibMeboRateController* rc, 
 
   return status;
 }
+} // extern "C"

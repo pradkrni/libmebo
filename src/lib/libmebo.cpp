@@ -10,23 +10,16 @@
  *  be found in the AUTHORS file in the root of the source tree.
  */
 #include <memory>
-#include <stdlib>
+#include <cstdlib>
 #include "libmebo.h"
 #include "RateControlFactory.hpp"
 
-static struct EncParams enc_params_ =
+typedef enum CodecID_
 {
-    .preset = 0,
-    .id = VP9_ID,
-    .bitrate = 1024,
-    .framerate = 30,
-    .width = 320,
-    .height = 240,
-    .framecount = 100,
-    .num_sl = 1,
-    .num_tl = 1,
-    .dynamic_rate_change = 0,
-};
+  VP8_ID = 0,
+  VP9_ID = 1,
+  AV1_ID = 2,
+} CodecID;
 
 LibMeboRateController * libmebo_create_rate_controller (
                     LibMeboCodecType CodecType, LibMeboBrcAlgorithmID algo_id) {
@@ -38,12 +31,12 @@ LibMeboRateController * libmebo_create_rate_controller (
   LibMeboRateController *libmebo_rc = static_cast<LibMeboRateController *>
                                     (malloc (sizeof(LibMeboRateController)));
   if (!libmebo_rc) {
-        fprintf(stderr, "Failed allocation for LibMeboRateController \n");
+        //fprintf(stderr, "Failed allocation for LibMeboRateController \n");
         return NULL;
   }
 
   libmebo_rc->priv = brc.release();
-  libmebo_rc->codec_type = 0;
+  libmebo_rc->codec_type = static_cast<LibMeboCodecType>(0); //later change
   return libmebo_rc;
   
 }
@@ -57,18 +50,18 @@ void libmebo_release_rate_controller(LibMeboRateController *rc)
     }
 }
 
-LibMeboStatus libmebo_init_rate_controller(LibMeboRateController *rc, 
+LibMeboRateController* libmebo_init_rate_controller(LibMeboRateController *rc, 
                                       	LibMeboRateControllerConfig* rc_config)
 {
     Libmebo_brc *brc = reinterpret_cast<Libmebo_brc *>(rc);
-    return static_cast<LibMeboStatus>(brc->init(rc, rc_config));
+    return reinterpret_cast<LibMeboRateController *>(brc->init(rc, rc_config));
 }
               
 LibMeboStatus libmebo_update_rate_controller_config(LibMeboRateController* rc,
             LibMeboRateControllerConfig* rc_cfg)
 {
     Libmebo_brc *brc = reinterpret_cast<Libmebo_brc *>(rc);
-    return static_cast<LibMeboStatus>(brc->update_config(rc, rc_config));
+    return static_cast<LibMeboStatus>(brc->update_config(rc, rc_cfg));
 }
 
 LibMeboStatus libmebo_post_encode_update(LibMeboRateController* rc, 
