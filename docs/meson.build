@@ -2,7 +2,7 @@ headerdir = join_paths(meson.source_root(), 'src/lib')
 footer = join_paths(meson.current_source_dir(), 'libmebo_footer.html')
 
 libmebo_headers_doc = [
-  'libmebo.h'
+  'libmebo.hpp'
 ]
 
 libmebo_doc_files = []

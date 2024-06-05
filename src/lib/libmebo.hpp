@@ -31,7 +31,8 @@
 #include <stdint.h>
 
 /**
- * \mainpage Library for Media Encode Bitrate-control-algorithm Orchestration (LibMebo)
+ * \mainpage Library for Media Encode Bitrate-control-algorithm Orchestration
+ * (LibMebo)
  *
  * \section intro Introduction
  * LibMebo is an open-source library to orchestrate the bitrate
@@ -57,7 +58,8 @@
  * __InitializeConfig(rc_cfg);
  *
  * //Create an instance of libmebo
- * rc = libmebo_rate_controller_new (LIBMEBO_CODEC_VP9, LIBMEBO_BRC_ALGORITHM_DEFAULT);
+ * rc = libmebo_rate_controller_new (LIBMEBO_CODEC_VP9,
+ * LIBMEBO_BRC_ALGORITHM_DEFAULT);
  *
  * //Initialize the libmebo instance with the rc_config
  * status = libmebo_rate_controller_init (rc, &rc_config);
@@ -83,7 +85,7 @@
  *
  *   // Optional:libmebo can also recommend the loop-filter strength
  *   status = libmebo_rate_controller_get_loop_filter_level (rc, &lf);
- * 
+ *
  *   // Ensure the status == LIBMEBO_STATUS_SUCCESS before using
  *   // the loop filter level since some algos are not supporting this API
  *
@@ -95,9 +97,9 @@
  *   assert (status == LIBMEBO_STATUS_SUCCESS);
  * }
  * \endcode
-*/
+ */
 
-//#include "../src/Handlers/LibMeboControlHandler.hpp"
+// #include "../src/Handlers/LibMeboControlHandler.hpp"
 
 #ifdef __cplusplus
 extern "C" {
@@ -107,9 +109,9 @@ extern "C" {
 #define LIBMEBO_ENABLE_VP9 1
 #define LIBMEBO_ENABLE_VP8 1
 
-typedef void* BrcCodecEnginePtr;
+typedef void *BrcCodecEnginePtr;
 
-/** 
+/**
  * Codec Types
  */
 typedef enum {
@@ -122,8 +124,7 @@ typedef enum {
 /**
  * Backend algorithm IDs
  */
-typedef enum
-{
+typedef enum {
   LIBMEBO_BRC_ALGORITHM_DEFAULT,
   LIBMEBO_BRC_ALGORITHM_DERIVED_LIBVPX_VP8,
   LIBMEBO_BRC_ALGORITHM_DERIVED_LIBVPX_VP9,
@@ -146,15 +147,12 @@ typedef enum {
   LIBMEBO_STATUS_UNKNOWN,
 } LibMeboStatus;
 
-/** 
+/**
  * Rate Control Modes
  */
-typedef enum {
-  LIBMEBO_RC_CBR,
-  LIBMEBO_RC_VBR
-} LibMeboRateControlMode;
+typedef enum { LIBMEBO_RC_CBR, LIBMEBO_RC_VBR } LibMeboRateControlMode;
 
-/** 
+/**
  * Frame prediction types
  */
 typedef enum {
@@ -163,7 +161,7 @@ typedef enum {
   LIBMEBO_FRAME_TYPES,
 } LibMeboFrameType;
 
-/** 
+/**
  * \biref Frame parameters
  *
  * This structure conveys frame level parameters and should be sent
@@ -189,7 +187,7 @@ typedef struct _LibMeboRCFrameParams {
  */
 #define LIBMEBO_SS_MAX_LAYERS 4
 
-/** 
+/**
  * Temporal + Spatial Scalability: Maximum number of coding layers
  * Not all codecs are supporting the LIBMEBO_MAX_LAYERS. The
  * libmebo_rate_controller_init() will perform the codec specific
@@ -197,7 +195,7 @@ typedef struct _LibMeboRCFrameParams {
  */
 #define LIBMEBO_MAX_LAYERS 32
 
-/** 
+/**
  * \biref LibMebo Rate Controller configuration structure
  *
  * This structure conveys the encoding parameters required
@@ -313,7 +311,7 @@ typedef struct _LibMeboRateControllerConfig {
    *
    */
   int max_intra_bitrate_pct;
- 
+
   /*\brief Codec control attribute to set max data rate for Inter frames.
    *
    * This value controls additional clamping on the maximum size of an
@@ -404,25 +402,32 @@ typedef struct _LibMeboRateController {
 } LibMeboRateController;
 
 
-LibMeboRateController * libmebo_create_rate_controller (
-                    LibMeboCodecType CodecType, LibMeboBrcAlgorithmID algo_id);
+
+/*these below API are exported using extern "C" to cleint side*/
+LibMeboRateController *
+libmebo_create_rate_controller(LibMeboCodecType CodecType,
+                               LibMeboBrcAlgorithmID algo_id);
 void libmebo_release_rate_controller(LibMeboRateController *rc);
 
+LibMeboRateController *
+libmebo_init_rate_controller(LibMeboRateController *rc,
+                             LibMeboRateControllerConfig *rc_config);
 
-LibMeboRateController*  libmebo_init_rate_controller(LibMeboRateController *rc, 
-                                      	LibMeboRateControllerConfig* rc_config);
-              
-LibMeboStatus libmebo_update_rate_controller_config(LibMeboRateController* rc,
-            LibMeboRateControllerConfig* rc_cfg);
-LibMeboStatus libmebo_post_encode_update(LibMeboRateController* rc, 
-                                           uint64_t encoded_frame_size);
+LibMeboStatus
+libmebo_update_rate_controller_config(LibMeboRateController *rc,
+                                      LibMeboRateControllerConfig *rc_cfg);
+LibMeboStatus libmebo_post_encode_update(LibMeboRateController *rc,
+                                         uint64_t encoded_frame_size);
 LibMeboStatus libmebo_compute_qp(LibMeboRateController *rc,
-                                 LibMeboRCFrameParams* rc_frame_params);
+                                 LibMeboRCFrameParams *rc_frame_params);
 
-LibMeboStatus libmebo_get_qp(LibMeboRateController* rc, int* qp);
- 
-LibMeboStatus libmebo_get_loop_filter_level(LibMeboRateController* rc, 
-                                                  int* filter_level);                                 
+LibMeboStatus libmebo_get_qp(LibMeboRateController *rc, int *qp);
+
+LibMeboStatus libmebo_get_loop_filter_level(LibMeboRateController *rc,
+                                            int *filter_level);
+
+void *create_brc_factory(unsigned int id);
+void destroy_brc_factory(void *brc);
 #ifdef __cplusplus
 }
 #endif

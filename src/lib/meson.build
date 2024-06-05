@@ -1,12 +1,12 @@
 libmebo_sources = [
-  'libmebo.c', 'libmebo.cpp',
+  'libmebo.cpp',
 ]
 
 libmebo_headers = [
-  'libmebo.h',
+  'libmebo.hpp',
 ]
 
-install_headers ('libmebo.h', subdir : 'libmebo')
+install_headers ('libmebo.hpp', subdir : 'libmebo')
 
 libmebo  = shared_library('mebo',
   libmebo_sources,

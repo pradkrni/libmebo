@@ -20,7 +20,7 @@
 # include "libmebo_config.h"
 #endif
 
-#include "libmebo.h"
+#include "libmebo.hpp"
 #if LIBMEBO_ENABLE_VP9
 #include "brc/vp9/libvpx_derived/libvpx_vp9_rtc.h"
 #endif

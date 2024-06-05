@@ -24,7 +24,7 @@ dl_dep_cpp = cpp_compiler.find_library('dl', required:true)
 
 libbrc_find = c_compiler.find_library('libbrc', required:true)
 
-libbrc_controller  = shared_library('libbrc_controller',
+brc_controller  = shared_library('brc_controller',
   libbrc_controller_sources  + libbrc_controller_headers,  
   c_args : libmebo_args,
   include_directories: [configinc, libbrcinc],
@@ -35,7 +35,7 @@ libbrc_controller  = shared_library('libbrc_controller',
   #include_directories: [configinc, libbrcinc, aom_av1_include_dir, aom_av1_include_build_dir],
 )
 
- libbrc_controller_dep = declare_dependency (link_with: libbrc_controller,
+ libbrc_controller_dep = declare_dependency (link_with: brc_controller,
    include_directories: [configinc, libbrcinc],
    #include_directories: [configinc, libbrcinc, aom_av1_include_dir , aom_av1_include_build_dir],
    dependencies: [dl_dep_c, dl_dep_cpp, libbrc_find]

@@ -10,7 +10,7 @@
   #include <memory>
   #include <stdio.h>
   #include <string.h>
-  #include "../src/lib/libmebo.h"
+  #include "../src/lib/libmebo.hpp"
   #include <getopt.h>
   #include <stdlib.h>
   #include <time.h>
@@ -26,7 +26,7 @@
   #define MaxTemporalLayers 3
 
   static LibMeboRateController *libmebo_rc;
-  static LibMeboRateControllerConfig libmebo_rc_config;
+  LibMeboRateControllerConfig libmebo_rc_config;
 
   typedef enum CodecID
   {
@@ -587,7 +587,7 @@
     printf("started in fake test main\n");
 
     std::unique_ptr <Libmebo_brc> brc  = Libmebo_brc_factory::create(static_cast<LibMeboBrcAlgorithmID>(enc_params. id));
-    
+    std::cout<<"av1 constructor done. \n";
     if (brc !=nullptr)
     {
         std::cout<<"controller->init\n";  
@@ -597,6 +597,7 @@
           fprintf(stderr, "Failed allocation for LibMeboRateController \n");
           return NULL;
         }
+        std::cout<<"brc init getting called,  malloced for libmebo_rc and un-init libmebo_rc_config \n";
         brc->init(libmebo_rc, &libmebo_rc_config);
         start_virtual_encode (brc, libmebo_rc, libmebo_rc_config);
     }
