@@ -42,11 +42,11 @@ Libmebo_brc_AV1::init(LibMeboRateController *libmebo_rc,
   libmebo_rc = Libmebo_brc::init(libmebo_rc, libmebo_rc_config);
   //char *path = "/home/pradeep4/Documents/pradeep/libmebo_git_submodule/"
                   //"libmebo/aom/build/libaom_av1_rc.so";
-  char *path = "/usr/local/lib/libaom_av1_rc.so";
+  char *path = "/lib64/libaom_av1_rc.so";
   std::cout<<"path taken for dlopen is ---"<<path<<std::endl;
   handle = dlopen(path, RTLD_LAZY);
   if (!handle) {
-    throw std::runtime_error("Cannot open the library ibaom_av1_rc.so");
+    throw std::runtime_error("Cannot open the library libaom_av1_rc.so");
   }
 
   ptrCreateAV1Controller =
