@@ -36,3 +36,4 @@ ninja -C build install \
 -- Add a common brc engine and interface for various codecs \
 -- Add BRC algorithms for more codecs \
 -- Add interface for binary blob brc algorithms.
+-- Merge AV1 SWBRC branch
